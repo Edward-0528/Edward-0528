@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>App Fee, AdMob Revenue and Subscription LTV Calculators</title>
+  <meta name="description" content="Free calculators for app developers: App Store and Google Play fee payouts, AdMob revenue estimates, and subscription LTV and payback.">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <header class="site">
+    <div class="wrap">
+      <a href="../" data-name>Ship It Twice</a>
+      <nav><a href="#fees">Fees</a><a href="#ads">AdMob</a><a href="#ltv">LTV</a></nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h1>Free calculators for app developers</h1>
+    <p class="lead">Model your payouts, ad revenue and subscription economics. Every rate is editable, because store fees and ad rates change.</p>
+
+    <!-- Fee calculator -->
+    <section id="fees">
+      <h2>App Store and Google Play payout calculator</h2>
+      <div class="card" id="fee-calc">
+        <div class="fields">
+          <div><label for="fee-price">Price ($)</label><input id="fee-price" type="number" min="0" step="0.01" value="9.99"></div>
+          <div><label for="fee-sales">Sales per month</label><input id="fee-sales" type="number" min="0" step="1" value="100"></div>
+          <div><label for="fee-apple">Apple fee (%)</label><input id="fee-apple" type="number" min="0" max="100" step="0.1" value="15"></div>
+          <div><label for="fee-google">Google fee (%)</label><input id="fee-google" type="number" min="0" max="100" step="0.1" value="15"></div>
+          <div><label for="fee-webpct">Web fee (%)</label><input id="fee-webpct" type="number" min="0" max="100" step="0.1" value="2.9"></div>
+          <div><label for="fee-webfixed">Web fixed fee ($)</label><input id="fee-webfixed" type="number" min="0" step="0.01" value="0.30"></div>
+        </div>
+        <table>
+          <thead><tr><th>Channel</th><th>Fee</th><th>You keep</th><th>Keep %</th><th>Per month</th></tr></thead>
+          <tbody id="fee-body"></tbody>
+        </table>
+        <p class="note warn">Defaults are examples (15% reflects the small-business tiers; the standard rate is higher). Check the current rates on Apple's and Google's official pages and your payment provider's pricing, then edit the fields. Sales tax and VAT are not included. Selling digital goods inside an iOS app generally requires in-app purchase, so web checkout only applies where the store rules allow it.</p>
+      </div>
+    </section>
+
+    <!-- AdMob estimator -->
+    <section id="ads">
+      <h2>AdMob revenue estimator</h2>
+      <div class="card" id="ad-calc">
+        <div class="fields">
+          <div><label for="ad-dau">Daily active users</label><input id="ad-dau" type="number" min="0" step="1" value="1000"></div>
+          <div><label for="ad-target">Monthly revenue goal ($)</label><input id="ad-target" type="number" min="0" step="1" value="1000"></div>
+        </div>
+        <div class="fields">
+          <div><label for="ad-banner-imps">Banner views / user / day</label><input id="ad-banner-imps" type="number" min="0" step="0.1" value="5"></div>
+          <div><label for="ad-banner-ecpm">Banner eCPM ($)</label><input id="ad-banner-ecpm" type="number" min="0" step="0.01" value="1.2"></div>
+          <div><label for="ad-inter-imps">Interstitials / user / day</label><input id="ad-inter-imps" type="number" min="0" step="0.1" value="3"></div>
+          <div><label for="ad-inter-ecpm">Interstitial eCPM ($)</label><input id="ad-inter-ecpm" type="number" min="0" step="0.01" value="10"></div>
+          <div><label for="ad-reward-imps">Rewarded / user / day</label><input id="ad-reward-imps" type="number" min="0" step="0.1" value="0.5"></div>
+          <div><label for="ad-reward-ecpm">Rewarded eCPM ($)</label><input id="ad-reward-ecpm" type="number" min="0" step="0.01" value="16"></div>
+        </div>
+        <div class="out">
+          <div class="stat"><div class="k">Revenue per daily user</div><div class="v" id="ad-arpdau"></div></div>
+          <div class="stat"><div class="k">Estimated per month</div><div class="v" id="ad-monthly"></div></div>
+          <div class="stat"><div class="k">Daily users needed for goal</div><div class="v" id="ad-need"></div></div>
+        </div>
+        <p class="note warn">Default eCPMs are rough US-traffic examples, and rates are much lower in many other countries. Replace them with the numbers from your own AdMob reports. Ad revenue alone often does not cover the cost of buying users.</p>
+      </div>
+    </section>
+
+    <!-- LTV -->
+    <section id="ltv">
+      <h2>Subscription LTV and payback calculator</h2>
+      <div class="card" id="ltv-calc">
+        <div class="fields">
+          <div><label for="ltv-price">Monthly price ($)</label><input id="ltv-price" type="number" min="0" step="0.01" value="7.99"></div>
+          <div><label for="ltv-fee">Store / processor fee (%)</label><input id="ltv-fee" type="number" min="0" max="100" step="0.1" value="15"></div>
+          <div><label for="ltv-churn">Monthly churn (%)</label><input id="ltv-churn" type="number" min="0" max="100" step="0.1" value="8"></div>
+          <div><label for="ltv-cac">Cost to acquire a subscriber ($)</label><input id="ltv-cac" type="number" min="0" step="0.01" value="20"></div>
+        </div>
+        <div class="out">
+          <div class="stat"><div class="k">Net per month</div><div class="v" id="ltv-net"></div></div>
+          <div class="stat"><div class="k">Average lifetime</div><div class="v" id="ltv-life"></div></div>
+          <div class="stat"><div class="k">Lifetime value</div><div class="v" id="ltv-ltv"></div></div>
+          <div class="stat"><div class="k">LTV : acquisition cost</div><div class="v" id="ltv-ratio"></div></div>
+          <div class="stat"><div class="k">Payback period</div><div class="v" id="ltv-payback"></div></div>
+        </div>
+        <p class="note">Uses the simple model: lifetime = 1 / churn, LTV = net monthly revenue x lifetime. It ignores trials, annual plans and changes in churn over time.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Shipping to both stores?</h2>
+      <div class="card">
+        <p>I'm writing a guide with the checklists, templates and rejection fixes from shipping an AI, subscription and health app to both stores. Get the free pre-submission checklist first.</p>
+        <form class="inline" data-waitlist data-source="tools" novalidate>
+          <label class="hidden" for="tools-email">Email</label>
+          <input id="tools-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <button class="btn" type="submit">Notify me</button>
+        </form>
+        <p class="msg" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site"><div class="wrap">Estimates only, not financial advice. <a href="../">Back to home</a></div></footer>
+  <script src="../config.js"></script>
+  <script src="../waitlist.js"></script>
+  <script src="../calc.js"></script>
+</body>
+</html>
